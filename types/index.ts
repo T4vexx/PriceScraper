@@ -1,5 +1,6 @@
 export type PriceHistoryItem = {
 	price: number;
+	date: Date;
 };
 
 export type User = {
@@ -20,7 +21,7 @@ export type Product = {
 	averagePrice: number;
 	discountRate: number;
 	description: string;
-	category: string;
+	brand: string;
 	reviewsCount: number;
 	stars: number;
 	isOutOfStock: boolean;

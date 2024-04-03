@@ -7,9 +7,10 @@ import {
 	extractPrice,
 	extractReviewsCount,
 	extractStars,
+	formatNumber,
 } from "../utils";
 
-export async function scapeAmazonProduct(url: string) {
+export async function scrapeAmazonProduct(url: string) {
 	if (!url) return;
 
 	const username = String(process.env.BRIGHT_DATA_USERNAME);
@@ -70,21 +71,22 @@ export async function scapeAmazonProduct(url: string) {
 			url,
 			currency: currency ?? "R",
 			image: imagesUrls[0],
-			currentPrice: Number(currentPrice) || Number(originalPrice),
-			originalPrice: Number(originalPrice) || Number(currentPrice),
+			currentPrice: currentPrice || originalPrice,
+			originalPrice: originalPrice || currentPrice,
 			priceHistory: [],
 			discountRate: Number(discountRate),
 			brand,
+			title,
 			reviewsCount: reviewsCount,
 			stars,
 			description,
 			isOutOfStock: !isStock,
-			lowestPrice: Number(currentPrice) || Number(originalPrice),
-			highestPrice: Number(originalPrice) || Number(currentPrice),
-			averagePrice: Number(currentPrice) || Number(originalPrice),
+			lowestPrice: currentPrice || originalPrice,
+			highestPrice: originalPrice || currentPrice,
+			averagePrice: currentPrice || originalPrice,
 		};
 
-		//console.log(data);
+		return data;
 		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	} catch (e: any) {
 		throw new Error(`Failed to scrape product: ${e.message}`);
